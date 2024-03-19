@@ -23,7 +23,14 @@ variable "kinesis_shard_count" {
 }
 
 variable "kinesis_retention_period" {
+  description = "Length of time data records are accessible after they are added to the stream."
+  type = number
   default = 24
+
+  validation {
+    condition = var.kinesis_retention_period >= 24 && var.kinesis_retention_period <= 168
+    error_message = "Rentention period must be greater than 24 and less than 168 hours"
+  }
 }
 
 variable "kinesis_encryption_type" {
@@ -95,5 +102,15 @@ variable "statistic" {
 variable "threshold" {
   type = number
   default = 1000
+}
+
+variable "tags" {
+  description = "Tags are used to track resources"
+  type = map(string)
+  default = {
+    Module = "kinesis-stream"
+    Department = "Data Team" 
+  }
+
 }
 

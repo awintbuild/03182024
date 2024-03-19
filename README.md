@@ -12,12 +12,44 @@ Terraform Module that deploys a Kinesis Data Stream, a Kinesis Data Firehose, al
 
 You will find the below module. Copy and paste the module into your Terraform configuration, and insert or update the variables, then run `terraform init`:
 
-```
+```hcl
 module "kinesis-stream" {
   source               = "./modules/kinesis-stream"
   s3_bucket_name       = var.s3_bucket_name
 }
 ```
+
+## Examples
+
+Example 1 Current configuration as seen 
+
+```hcl
+module "kinesis-stream" {
+  source                       = "git@github.com:[username]/reponame/kinesis-stream?ref=v1.0.0"
+  name                         = "my-streamname"
+  s3_bucket_name               = "my-bucketname"
+  kinesis_shard_count          = 1
+  kinesis_retention_period     = 72
+  shard_level_metrics          = ["IncomingBytes", "OutgoingBytes"]
+}
+```
+
+Example 2 
+
+```hcl
+module "kinesis-stream" {
+  source                       = "git@github.com:[username]/reponame/kinesis-stream?ref=v1.0.0"
+  name                         = "my-streamname"
+  s3_bucket_name               = "my-bucketname"
+  kinesis_shard_count          = 1
+  kinesis_retention_period     = 72
+  shard_level_metrics          = ["IncomingBytes", "OutgoingBytes"]
+}
+```
+
+## Testing
+Leverage VSCode extention see the  
+
 
 ## Inputs
 
@@ -25,7 +57,7 @@ module "kinesis-stream" {
 | ---- | ----------- | ---- | ------- | -------- |
 | name | Identify's the stream using this module. | string | - | yes |
 | shard_count | The number of shards that the stream will use. More information can be found [here](https://docs.aws.amazon.com/kinesis/latest/dev/amazon-kinesis-streams.html) | number | - | no |
-| retention_period | Length of time data records are accessible after they are added to the stream. | number | 24 | no |
+| kinesis_retention_period | Length of time data records are accessible after they are added to the stream. | number | 24 | no |
 | shard_level_metrics | A list of shard-level CloudWatch metrics which can be enabled for the stream.| list | - | no |
 | enforce_consumer_deletion | A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. | bool | false | no |
 | encryption type | The encryption type to use | string | none | no |
