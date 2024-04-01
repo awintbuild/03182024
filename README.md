@@ -34,18 +34,6 @@ module "kinesis-stream" {
 }
 ```
 
-Example 2 
-
-```hcl
-module "kinesis-stream" {
-  source                       = "git@github.com:[username]/reponame/kinesis-stream?ref=v1.0.0"
-  name                         = "my-streamname"
-  s3_bucket_name               = "my-bucketname"
-  kinesis_shard_count          = 1
-  kinesis_retention_period     = 72
-  shard_level_metrics          = ["IncomingBytes", "OutgoingBytes"]
-}
-```
 
 ## Testing
 Leverage VSCode extention see the  
